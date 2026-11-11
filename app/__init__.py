@@ -12,7 +12,10 @@ def create_app():
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'vortex-2050-secret')
     
     basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'instance', 'vortex.db')
+    instance_dir = os.path.join(basedir, 'instance')
+    os.makedirs(instance_dir, exist_ok=True)
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(instance_dir, 'vortex.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
