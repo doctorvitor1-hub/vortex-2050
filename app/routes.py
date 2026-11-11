@@ -23,11 +23,9 @@ def index():
     
     return render_template('index.html', products=products, categories=categories, active_category=category, search=search)
 
-@main_bp.route('/produto/<slug>')
-def product_detail(slug):
-    product = Product.query.filter_by(slug=slug).first_or_404()
-    related = Product.query.filter(Product.category == product.category, Product.id != product.id).limit(3).all()
-    return render_template('product.html', product=product, related=related)
+@main_bp.route('/institucional')
+def legal():
+    return render_template('legal.html')
 
 @main_bp.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
