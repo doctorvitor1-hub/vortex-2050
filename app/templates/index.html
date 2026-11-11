@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="hero">
+  <span class="hero-tag">Curadoria Oficial em Alta • 50 Edições</span>
+  <h1>Domine o que o futuro exige antes da maioria.</h1>
+  <p>Guias práticos de Inteligência Artificial, Renda Digital, Biohacking e Finanças Modernas com liberação imediata.</p>
+</section>
+
+<section class="controls">
+  <form class="search-bar" method="GET" action="/">
+    <input type="text" name="q" placeholder="Buscar por IA, renda digital, sono, finanças..." value="{{ search }}">
+    <button type="submit">Buscar</button>
+  </form>
+
+  <div class="categories">
+    {% for cat in categories %}
+      <a href="/?category={{ cat|urlencode }}" class="cat-pill {% if active_category == cat %}active{% endif %}">
+        {{ cat }}
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+<main class="grid">
+  {% for product in products %}
+    <article class="card">
+      <div>
+        <div class="card-top">
+          <span class="badge">{{ product.cover_badge }}</span>
+          <span class="cat-label">{{ product.category }}</span>
+        </div>
+        <h3><a href="/produto/{{ product.slug }}">{{ product.title }}</a></h3>
+        <p>{{ product.description }}</p>
+      </div>
+
+      <div class="card-footer">
+        <span class="price">R$ {{ "%.2f"|format(product.price)|replace('.', ',') }}</span>
+        <button class="btn-add" onclick='addToCart({{ product.id }}, {{ product.title|tojson }}, {{ product.price }})'>
+          + Carrinho
+        </button>
+      </div>
+    </article>
+  {% endfor %}
+</main>
+
+{% endblock %}

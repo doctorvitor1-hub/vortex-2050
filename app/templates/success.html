@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Acesso Liberado | VORTEX 2050{% endblock %}
+{% block content %}
+
+<div class="detail-container">
+  <div class="detail-box">
+    {% if order.status == 'paid' %}
+      <span class="badge">PAGAMENTO CONFIRMADO • ACESSO VITALÍCIO</span>
+      <h1>Seus E-books Estão Liberados!</h1>
+      <p class="detail-desc">
+        Obrigado pela compra{% if order.customer_email %} ({{ order.customer_email }}){% endif %}. 
+        Clique nos botões abaixo para baixar suas edições digitais agora mesmo.
+      </p>
+
+      <div style="display:flex; flex-direction:column; gap:1rem; margin-top:2rem;">
+        {% for item in order.items %}
+          <div class="cart-item" style="padding:1.2rem;">
+            <div class="cart-item-info">
+              <h4 style="font-size:1.05rem;">{{ item.product.title }}</h4>
+              <span>{{ item.product.category }} • Edição Digital</span>
+            </div>
+            <a href="/download/{{ order.access_token }}/{{ item.product.id }}" class="btn-checkout" style="width:auto; padding:0.7rem 1.4rem; text-decoration:none;">
+              Baixar E-book
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+
+      <script>
+        localStorage.removeItem('vortex_cart');
+      </script>
+    {% else %}
+      <span class="badge" style="color:#FBBF24; background:rgba(251,191,36,0.1);">AGUARDANDO CONFIRMAÇÃO</span>
+      <h1>Processando Pagamento...</h1>
+      <p class="detail-desc">Assim que a Stripe confirmar a transação, seus downloads aparecerão automaticamente aqui. Atualize a página em alguns segundos.</p>
+      <a href="/pedido/{{ order.access_token }}" class="btn-checkout" style="display:inline-block; width:auto; padding:0.8rem 1.5rem; text-decoration:none;">
+        Atualizar Status
+      </a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

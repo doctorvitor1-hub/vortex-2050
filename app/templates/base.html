@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}VORTEX 2050 | Conhecimento de Próxima Geração{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="/" class="logo">VORTEX <span>2050</span></a>
+    <button class="cart-btn" onclick="toggleCart()">
+      Carrinho (<span id="cartCount">0</span>)
+    </button>
+  </nav>
+
+  {% block content %}{% endblock %}
+
+  <!-- Carrinho Lateral -->
+  <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
+  <aside id="cartDrawer" class="cart-drawer">
+    <div class="drawer-header">
+      <h3>Seu Arsenal Digital</h3>
+      <button class="close-btn" onclick="toggleCart()">&times;</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="drawer-footer">
+      <div class="total-row">
+        <span>Total</span>
+        <span id="cartTotal">R$ 0,00</span>
+      </div>
+      <button id="checkoutBtn" class="btn-checkout" onclick="proceedToCheckout()">
+        Finalizar Compra Segura
+      </button>
+    </div>
+  </aside>
+
+  <footer class="footer">
+    VORTEX 2050 &copy; 2026 — Plataforma Digital de Alta Performance. Entrega imediata pós-pagamento.
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+</body>
+</html>
